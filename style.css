@@ -69,8 +69,29 @@ main {
     border-radius: 5px;
 }
 
+.project-btn {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 12px 24px;
+    background-color: #E63950; /* Egyezik a fejléc színével */
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.3s ease-in-out, transform 0.2s;
+}
+
+.project-btn:hover {
+    background-color: #c52e42;
+    transform: scale(1.05);
+}
+
 @media (max-width: 600px) {
-    .doc-item {
-        width: 90%;
+    .project-btn {
+        display: block;
+        text-align: center;
+        width: 80%;
+        margin: 15px auto;
     }
 }

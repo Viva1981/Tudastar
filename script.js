@@ -20,3 +20,13 @@ document.getElementById('search').addEventListener('keyup', function() {
         message.style.display = "none";
     }
 });
+
+// Kártyák kattinthatóvá tétele
+document.querySelectorAll('.doc-item').forEach(item => {
+    item.addEventListener('click', function() {
+        let url = this.getAttribute('data-url');
+        if (url) {
+            window.open(url, '_blank');
+        }
+    });
+});

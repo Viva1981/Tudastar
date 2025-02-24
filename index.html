@@ -7,14 +7,23 @@
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="favicon.png">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <header>
         <h1>Support Tudástár</h1>
         <input type="text" id="search" placeholder="Keresés...">
-<a href="https://viva1981.github.io/Projekt-Manager/" class="project-btn">Projekt Manager</a>
+        <a href="https://viva1981.github.io/Projekt-Manager/" class="project-btn">Projekt Manager</a>
+        <div id="g_id_onload"
+             data-client_id="473166808563-n1k0ujk4o9orhfbfggf0lritbqghh36d.apps.googleusercontent.com"
+             data-context="signin"
+             data-ux_mode="popup"
+             data-callback="handleCredentialResponse"
+             data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard" data-size="large"></div>
     </header>
-    <main>
+    <main id="content" style="display: none;">
         <section id="docs">
             <h3>PDF Dokumentumok</h3>
             <div class="doc-item" data-url="docs/Fiscat Super FP AEE Driver Protocol.pdf">
@@ -23,21 +32,45 @@
             <div class="doc-item" data-url="docs/Oneminorder - eszközök 20240903.pdf">
                 <h1>Eszköz árlista</h1>
             </div>
-
             <h3>Leírások, útmutatók</h3>
-<div class="doc-item" data-url="docs/GoDaddy.html">
-    <h1>GoDaddy útmutató</h1>
-</div>
-<div class="doc-item" data-url="docs/FA.html">
-    <h1>ÁFA súgó</h1>
-</div>
-             <h3>Táblázatok, sablonok</h3>
-<div class="doc-item" data-url="docs/Adatbek.html">
-    <h1>Adatbekérő sablon</h1>
-</div>
+            <div class="doc-item" data-url="docs/GoDaddy.html">
+                <h1>GoDaddy útmutató</h1>
+            </div>
+            <div class="doc-item" data-url="docs/FA.html">
+                <h1>ÁFA súgó</h1>
+            </div>
+            <h3>Táblázatok, sablonok</h3>
+            <div class="doc-item" data-url="docs/Adatbek.html">
+                <h1>Adatbekérő sablon</h1>
+            </div>
         </section>
         <p id="no-results" style="display: none; color: red;">Nincs találat...</p>
     </main>
-    <script src="script.js"></script>
+    <script>
+        function handleCredentialResponse(response) {
+            const jwtToken = response.credential;
+            const userInfo = parseJwt(jwtToken);
+            
+            const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu"];
+            
+            if (allowedEmails.includes(userInfo.email)) {
+                alert("Sikeres bejelentkezés, üdvözlünk " + userInfo.email);
+                document.getElementById("content").style.display = "block";
+            } else {
+                alert("Nincs jogosultságod belépni!");
+                document.getElementById("content").style.display = "none";
+            }
+        }
+
+        function parseJwt(token) {
+            let base64Url = token.split('.')[1];
+            let base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            let jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+            }).join(''));
+            
+            return JSON.parse(jsonPayload);
+        }
+    </script>
 </body>
 </html>

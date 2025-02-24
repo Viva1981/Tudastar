@@ -23,10 +23,12 @@ document.getElementById('search').addEventListener('keyup', function() {
 
 // Kártyák kattinthatóvá tétele
 document.querySelectorAll('.doc-item').forEach(item => {
-    item.addEventListener('click', function() {
+    item.onclick = function() {
         let url = this.getAttribute('data-url');
         if (url) {
-            window.open(url, '_blank');
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 500); // Kis késleltetés, hogy elkerüljük a popup blokkolást
         }
-    });
+    };
 });

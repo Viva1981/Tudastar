@@ -48,19 +48,32 @@
     </main>
     <script>
         function handleCredentialResponse(response) {
-            const jwtToken = response.credential;
-            const userInfo = parseJwt(jwtToken);
-            
-            const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu", "daniel@oneminorder.hu", "nandor@oneminorder.hu", "levente@oneminorder.hu", "peter@oneminorder.hu", "attila@oneminorder.hu", "tamas@oneminorder.hu", "krisztian@oneminorder.hu"];
-            
-            if (allowedEmails.includes(userInfo.email)) {
-                alert("Sikeres bejelentkezés, üdvözlünk " + userInfo.email);
-                document.getElementById("content").style.display = "block";
-            } else {
-                alert("Nincs jogosultságod belépni!");
-                document.getElementById("content").style.display = "none";
-            }
-        }
+    const jwtToken = response.credential;
+    const userInfo = parseJwt(jwtToken);
+    
+    const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu", "daniel@oneminorder.hu", "nandor@oneminorder.hu", "levente@oneminorder.hu", "peter@oneminorder.hu", "attila@oneminorder.hu", "tamas@oneminorder.hu", "krisztian@oneminorder.hu"];
+    
+    if (allowedEmails.includes(userInfo.email)) {
+        alert("Sikeres bejelentkezés, üdvözlünk " + userInfo.email);
+        document.getElementById("content").style.display = "block";
+
+        // Itt tesszük kattinthatóvá a kártyákat bejelentkezés után
+        document.querySelectorAll('.doc-item').forEach(item => {
+            item.onclick = function() {
+                let url = this.getAttribute('data-url');
+                if (url) {
+                    setTimeout(() => {
+                        window.open(url, '_blank');
+                    }, 500);
+                }
+            };
+        });
+
+    } else {
+        alert("Nincs jogosultságod belépni!");
+        document.getElementById("content").style.display = "none";
+    }
+}
 
         function parseJwt(token) {
             let base64Url = token.split('.')[1];

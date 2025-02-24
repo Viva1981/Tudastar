@@ -21,6 +21,10 @@ document.getElementById('search').addEventListener('keyup', function() {
     }
 });
 
+document.getElementById("custom-google-signin").addEventListener("click", function () {
+    google.accounts.id.prompt(); // A Google bejelentkezési popup megjelenítése
+});
+
 // Kártyák kattinthatóvá tétele
 document.querySelectorAll('.doc-item').forEach(item => {
     item.onclick = function() {

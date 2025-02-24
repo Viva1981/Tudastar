@@ -14,6 +14,13 @@
         <h1>Support Tudástár</h1>
         <input type="text" id="search" placeholder="Keresés...">
         <a href="https://viva1981.github.io/Projekt-Manager/" class="project-btn">Projekt Manager</a>
+
+        <!-- Google Bejelentkezési Gomb Egyedi Stílussal -->
+        <div id="custom-google-signin">
+            <img src="google-icon.svg" alt="Google ikon">
+            <span>Bejelentkezés Google-lel</span>
+        </div>
+
         <div id="g_id_onload"
              data-client_id="473166808563-n1k0ujk4o9orhfbfggf0lritbqghh36d.apps.googleusercontent.com"
              data-context="signin"
@@ -21,8 +28,8 @@
              data-callback="handleCredentialResponse"
              data-auto_prompt="false">
         </div>
-        <div class="g_id_signin" data-type="standard" data-size="large"></div>
     </header>
+
     <main id="content" style="display: none;">
         <section id="docs">
             <h3>PDF Dokumentumok</h3>
@@ -46,34 +53,41 @@
         </section>
         <p id="no-results" style="display: none; color: red;">Nincs találat...</p>
     </main>
-    <script>
-        function handleCredentialResponse(response) {
-    const jwtToken = response.credential;
-    const userInfo = parseJwt(jwtToken);
-    
-    const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu", "daniel@oneminorder.hu", "nandor@oneminorder.hu", "levente@oneminorder.hu", "peter@oneminorder.hu", "attila@oneminorder.hu", "tamas@oneminorder.hu", "krisztian@oneminorder.hu"];
-    
-    if (allowedEmails.includes(userInfo.email)) {
-        alert("Sikeres bejelentkezés, üdvözlünk " + userInfo.email);
-        document.getElementById("content").style.display = "block";
 
-        // Itt tesszük kattinthatóvá a kártyákat bejelentkezés után
-        document.querySelectorAll('.doc-item').forEach(item => {
-            item.onclick = function() {
-                let url = this.getAttribute('data-url');
-                if (url) {
-                    setTimeout(() => {
-                        window.open(url, '_blank');
-                    }, 500);
-                }
-            };
+    <script src="script.js"></script>
+
+    <script>
+        document.getElementById("custom-google-signin").addEventListener("click", function () {
+            google.accounts.id.prompt(); // A Google bejelentkezési popup megjelenítése
         });
 
-    } else {
-        alert("Nincs jogosultságod belépni!");
-        document.getElementById("content").style.display = "none";
-    }
-}
+        function handleCredentialResponse(response) {
+            const jwtToken = response.credential;
+            const userInfo = parseJwt(jwtToken);
+            
+            const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu", "daniel@oneminorder.hu", "nandor@oneminorder.hu", "levente@oneminorder.hu", "peter@oneminorder.hu", "attila@oneminorder.hu", "tamas@oneminorder.hu", "krisztian@oneminorder.hu"];
+            
+            if (allowedEmails.includes(userInfo.email)) {
+                alert("Sikeres bejelentkezés, üdvözlünk " + userInfo.email);
+                document.getElementById("content").style.display = "block";
+
+                // Kártyák kattinthatóvá tétele bejelentkezés után
+                document.querySelectorAll('.doc-item').forEach(item => {
+                    item.onclick = function() {
+                        let url = this.getAttribute('data-url');
+                        if (url) {
+                            setTimeout(() => {
+                                window.open(url, '_blank');
+                            }, 500);
+                        }
+                    };
+                });
+
+            } else {
+                alert("Nincs jogosultságod belépni!");
+                document.getElementById("content").style.display = "none";
+            }
+        }
 
         function parseJwt(token) {
             let base64Url = token.split('.')[1];

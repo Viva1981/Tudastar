@@ -51,7 +51,7 @@
             const jwtToken = response.credential;
             const userInfo = parseJwt(jwtToken);
             
-            const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu"];
+            const allowedEmails = ["stuller.zsolt@gmail.com", "zsolt@oneminorder.hu", "daniel@oneminorder.hu", "nandor@oneminorder.hu", "levente@oneminorder.hu", "peter@oneminorder.hu", "attila@oneminorder.hu", "tamas@oneminorder.hu", "krisztian@oneminorder.hu"];
             
             if (allowedEmails.includes(userInfo.email)) {
                 alert("Sikeres bejelentkezés, üdvözlünk " + userInfo.email);

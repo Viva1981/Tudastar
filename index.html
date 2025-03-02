@@ -12,11 +12,6 @@
     <header>
         <h1>Support Tudástár</h1>
         <input type="text" id="search" placeholder="Keresés...">
-        
-        <div id="custom-google-signin">
-            <img src="google-icon.svg" alt="Google ikon">
-            <span>Bejelentkezés Google-fiókkal</span>
-        </div>
 
         <div id="g_id_onload"
              data-client_id="473166808563-n1k0ujk4o9orhfbfggf0lritbqghh36d.apps.googleusercontent.com"
@@ -55,10 +50,6 @@
     <script src="script.js"></script>
    
     <script>
-        document.getElementById("custom-google-signin").addEventListener("click", function () {
-            google.accounts.id.prompt(); // A Google bejelentkezési popup megjelenítése
-        });
-
         function handleCredentialResponse(response) {
             const jwtToken = response.credential;
             const userInfo = parseJwt(jwtToken);
